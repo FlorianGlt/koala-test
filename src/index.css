@@ -56,9 +56,10 @@ code {
 .date-text {
   font-size: 12px;
   color: var(--light-gray);
+  margin-bottom: 8px;
 }
 
-.destination {
+.emphasize-text {
   font-family: HKGroteskBold;
   font-size: 20px;
   font-weight: 700;

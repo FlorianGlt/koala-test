@@ -1,6 +1,6 @@
-import moment from "moment";
 import * as React from "react";
-import { Contract, DetailedContract } from "../../Utils/Interfaces";
+import moment from "moment";
+import { DetailedContract } from "../../Utils/Interfaces";
 import {
   splitCamelCase,
   formatFlightNumber,
@@ -20,13 +20,16 @@ const DetailedContractCard = ({ contract }: Props) => {
   const Header = () => (
     <div className="card-header">
       <div className="detailed-contract-content">
-        <span className="date-text">{date.format("MMM D[,] YYYY")}</span>
-        <span className="destination">{from}</span>
+        <span className="date-text">
+          {date.format("MMM D[,] YYYY").toUpperCase()}
+        </span>
+        <span className="emphasize-text">{from}</span>
         <span className="iata">{contract.flight.from.iata}</span>
       </div>
       <div className="separator" />
       <div className="detailed-contract-content">
-        <span className="destination">{to}</span>
+        <span />
+        <span className="emphasize-text">{to}</span>
         <span className="iata">{contract.flight.to.iata}</span>
       </div>
     </div>
@@ -36,13 +39,13 @@ const DetailedContractCard = ({ contract }: Props) => {
     <div className="card-section">
       <div className="detailed-contract-content">
         <span className="date-text">Flight N°</span>
-        <span className="destination">
+        <span className="emphasize-text">
           {formatFlightNumber(contract.flight.number)}
         </span>
       </div>
       <div className="detailed-contract-content">
         <span className="date-text">Departure Hour</span>
-        <span className="destination">{date.format("HH[:]mm")}</span>
+        <span className="emphasize-text">{date.format("HH[:]mm")}</span>
       </div>
     </div>
   );
@@ -51,7 +54,7 @@ const DetailedContractCard = ({ contract }: Props) => {
     <div className={["card-section", "section-border-top"].join(" ")}>
       <div className="detailed-contract-content">
         <span className="date-text">Delay</span>
-        <span className={["destination", "error-text"].join(" ")}>
+        <span className={["emphasize-text", "error-text"].join(" ")}>
           {convertDelayInMinutesToDelayInHours(
             contract.claim.flightStatus.delay
           )}
@@ -59,7 +62,7 @@ const DetailedContractCard = ({ contract }: Props) => {
       </div>
       <div className="detailed-contract-content">
         <span className="date-text">Required Delay</span>
-        <span className="destination">
+        <span className="emphasize-text">
           {convertDelayInMinutesToDelayInHours(contract.product.minDelay)}
         </span>
       </div>

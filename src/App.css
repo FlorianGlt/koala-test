@@ -32,6 +32,7 @@
 }
 
 .title {
+  margin-top: 0;
   font-family: HKGroteskExtraBold;
   font-size: 32px;
   margin-bottom: 33px;
@@ -40,12 +41,12 @@
 .section1,
 .section2 {
   display: flex;
+  flex: 1;
   flex-direction: column;
 }
 
 .section2 {
   max-width: 370px;
-  justify-content: center;
   align-items: center;
 }
 
@@ -57,4 +58,32 @@
 
 .contract-alert-response {
   margin-bottom: 20px;
+}
+
+.button {
+  padding: 8px 32px;
+  align-self: flex-start;
+  font-size: 16px;
+  font-weight: 700;
+  border-width: 2px;
+  border-radius: 6px;
+  margin-bottom: 24px;
+}
+
+@media screen and (max-width: 760px) {
+  .app-container {
+    padding: 36px 20px;
+  }
+
+  .title {
+    margin-bottom: 24px;
+  }
+
+  .contracts-container {
+    flex: 1;
+  }
+
+  .section2 {
+    justify-content: center;
+  }
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useMediaQuery } from "react-responsive";
 import Navbar from "./Components/Navbar";
 import ContractListItem from "./Components/ContractListItem";
 import "./App.css";
@@ -16,8 +17,10 @@ const errorAlertTitle = "🥲 Sorry";
 const successAlertTitle = "😃 Yeah !";
 
 function App() {
+  const [appState, setAppState] = useState<"initial" | "fetching" | "detailed">(
+    "initial"
+  );
   const [contracts, setContracts] = useState<Contract[]>([]);
-  const [isFetching, setIsFetching] = useState(false);
   const [selectedContractId, setSelectedContractId] = useState<string | null>(
     null
   );
@@ -25,6 +28,7 @@ function App() {
     detailedContract,
     setDetailedContract,
   ] = useState<DetailedContract | null>(null);
+  const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
 
   useEffect(() => {
     fetch("http://localhost:9090/contract")
@@ -33,13 +37,15 @@ function App() {
   }, []);
 
   useEffect(() => {
-    setIsFetching(true);
-    fetch(`http://localhost:9090/contract/${selectedContractId}`)
-      .then((res) => res.json())
-      .then((contract) => {
-        setIsFetching(false);
-        setDetailedContract(contract);
-      });
+    if (selectedContractId) {
+      setAppState("fetching");
+      fetch(`http://localhost:9090/contract/${selectedContractId}`)
+        .then((res) => res.json())
+        .then((contract) => {
+          setAppState("detailed");
+          setDetailedContract(contract);
+        });
+    }
   }, [selectedContractId]);
 
   const renderListItem = (contract: Contract) => {
@@ -57,39 +63,55 @@ function App() {
     <div className="app">
       <Navbar />
       <div className="app-container">
-        <h1 className="title">Your flights</h1>
+        {(!isMobile || (isMobile && appState === "initial")) && (
+          <h1 className="title">Your flights</h1>
+        )}
+        {isMobile && appState === "detailed" && (
+          <button
+            className="button"
+            onClick={() => {
+              setSelectedContractId(null);
+              setDetailedContract(null);
+              setAppState("initial");
+            }}
+          >
+            Back
+          </button>
+        )}
         <div className="contracts-container">
-          <div className="section1">
-            <div className="list">{contracts.map(renderListItem)}</div>
-          </div>
-          <div className="section2">
-            {isFetching && (
-              <img
-                src={Globe}
-                className="spinning-globe"
-                alt="globe-spinning"
-              />
-            )}
-            {!isFetching && detailedContract && (
-              <>
-                {detailedContract.claim.status === "accepted" ? (
-                  <Alert
-                    message={successAlertMessage}
-                    title={successAlertTitle}
-                    className="contract-alert-response"
-                  />
-                ) : (
-                  <Alert
-                    title={errorAlertTitle}
-                    message={errorAlertMessage}
-                    type="error"
-                    className="contract-alert-response"
-                  />
-                )}
-                <DetailedContractCard contract={detailedContract} />
-              </>
-            )}
-          </div>
+          {(!isMobile || (isMobile && appState === "initial")) && (
+            <div className="section1">{contracts.map(renderListItem)}</div>
+          )}
+          {(!isMobile || (isMobile && appState)) !== "initial" && (
+            <div className="section2">
+              {appState === "fetching" && (
+                <img
+                  src={Globe}
+                  className="spinning-globe"
+                  alt="globe-spinning"
+                />
+              )}
+              {appState === "detailed" && detailedContract && (
+                <>
+                  {detailedContract.claim.status === "accepted" ? (
+                    <Alert
+                      message={successAlertMessage}
+                      title={successAlertTitle}
+                      className="contract-alert-response"
+                    />
+                  ) : (
+                    <Alert
+                      title={errorAlertTitle}
+                      message={errorAlertMessage}
+                      type="error"
+                      className="contract-alert-response"
+                    />
+                  )}
+                  <DetailedContractCard contract={detailedContract} />
+                </>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
