@@ -16,6 +16,10 @@
     url(./Assets/fonts/HKGrotesk-ExtraBold.otf) format("truetype");
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html {
   height: 100%;
 }
@@ -31,7 +35,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
-  box-sizing: border-box;
 }
 
 code {

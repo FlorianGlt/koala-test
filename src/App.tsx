@@ -5,6 +5,15 @@ import "./App.css";
 import { Contract, DetailedContract } from "./Utils/Interfaces";
 import Globe from "./Assets/Icons/ezgif.com-gif-maker.gif";
 import DetailedContractCard from "./Components/DetailedContractCard";
+import Alert from "./Components/Alert";
+
+// Normally I use I18n for text
+const errorAlertMessage =
+  "Unfortunately, this flight is not eligible for compensation. We thank you for your trust.";
+const successAlertMessage =
+  "Everything is up to date on our end. \nWe thank you for your trust.";
+const errorAlertTitle = "🥲 Sorry";
+const successAlertTitle = "😃 Yeah !";
 
 function App() {
   const [contracts, setContracts] = useState<Contract[]>([]);
@@ -48,17 +57,39 @@ function App() {
     <div className="app">
       <Navbar />
       <div className="app-container">
-        <div className="section1">
-          <h1 className="title">Your flights</h1>
-          <div className="list">{contracts.map(renderListItem)}</div>
-        </div>
-        <div className="section2">
-          {isFetching && (
-            <img src={Globe} className="spinning-globe" alt="globe-spinning" />
-          )}
-          {!isFetching && detailedContract && (
-            <DetailedContractCard contract={detailedContract} />
-          )}
+        <h1 className="title">Your flights</h1>
+        <div className="contracts-container">
+          <div className="section1">
+            <div className="list">{contracts.map(renderListItem)}</div>
+          </div>
+          <div className="section2">
+            {isFetching && (
+              <img
+                src={Globe}
+                className="spinning-globe"
+                alt="globe-spinning"
+              />
+            )}
+            {!isFetching && detailedContract && (
+              <>
+                {detailedContract.claim.status === "accepted" ? (
+                  <Alert
+                    message={successAlertMessage}
+                    title={successAlertTitle}
+                    className="contract-alert-response"
+                  />
+                ) : (
+                  <Alert
+                    title={errorAlertTitle}
+                    message={errorAlertMessage}
+                    type="error"
+                    className="contract-alert-response"
+                  />
+                )}
+                <DetailedContractCard contract={detailedContract} />
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

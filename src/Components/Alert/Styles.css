@@ -1,0 +1,31 @@
+.error-alert,
+.success-alert {
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.error-alert {
+  background-color: var(--light-error);
+  border: 1px solid var(--error);
+  color: var(--error);
+}
+
+.success-alert {
+  background-color: var(--light-success);
+  border: 1px solid var(--success);
+  color: var(--success);
+}
+
+.title-alert {
+  font-weight: 900;
+  font-size: 24px;
+  font-family: HKGroteskBold;
+}
+
+.message-alert {
+  color: var(--text);
+  white-space: pre-wrap;
+}

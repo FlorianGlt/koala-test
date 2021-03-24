@@ -7,7 +7,9 @@
   --white: #ffffff;
   --black: #000000;
   --success: #6ee9c5;
+  --light-success: #dffdf4;
   --error: #fa3232;
+  --light-error: #ffe2e2;
 }
 
 .app {
@@ -20,7 +22,13 @@
 .app-container {
   padding: 36px 98px;
   display: flex;
+  flex-direction: column;
   flex: 1;
+}
+
+.contracts-container {
+  display: flex;
+  justify-content: space-between;
 }
 
 .title {
@@ -31,12 +39,12 @@
 
 .section1,
 .section2 {
-  flex: 1;
   display: flex;
   flex-direction: column;
 }
 
 .section2 {
+  max-width: 370px;
   justify-content: center;
   align-items: center;
 }
@@ -45,4 +53,8 @@
   align-self: center;
   height: 325px;
   width: 325px;
+}
+
+.contract-alert-response {
+  margin-bottom: 20px;
 }
