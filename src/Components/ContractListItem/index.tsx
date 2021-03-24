@@ -7,7 +7,7 @@ import "./Styles.css";
 
 interface Props {
   contract: Contract;
-  onSelect: (contract: Contract) => void;
+  onSelect: (id: string) => void;
   isSelected?: boolean;
 }
 
@@ -24,12 +24,16 @@ const ContractListItem = ({
 
   return (
     <button
-      className={["card", isSelected ? "selected" : ""].join(" ")}
-      onClick={() => onSelect(contract)}
+      className={[
+        "card",
+        "contract-list-card",
+        isSelected ? "selected" : "",
+      ].join(" ")}
+      onClick={() => onSelect(contract.id)}
     >
       <img src={luggages} alt="luggages" className="luggage-image" />
-      <div className="content">
-        <span className="date">{date}</span>
+      <div className="contract-list-content">
+        <span className="date-text">{date}</span>
         <span className="destination">{destination}</span>
         <span className="text">{contract.flight.nbOfTravellers} Travelers</span>
       </div>

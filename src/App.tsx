@@ -4,13 +4,18 @@ import ContractListItem from "./Components/ContractListItem";
 import "./App.css";
 import { Contract, DetailedContract } from "./Utils/Interfaces";
 import Globe from "./Assets/Icons/ezgif.com-gif-maker.gif";
+import DetailedContractCard from "./Components/DetailedContractCard";
 
 function App() {
   const [contracts, setContracts] = useState<Contract[]>([]);
   const [isFetching, setIsFetching] = useState(false);
-  const [selectedContract, setSelectedContract] = useState<Contract | null>(
+  const [selectedContractId, setSelectedContractId] = useState<string | null>(
     null
   );
+  const [
+    detailedContract,
+    setDetailedContract,
+  ] = useState<DetailedContract | null>(null);
 
   useEffect(() => {
     fetch("http://localhost:9090/contract")
@@ -19,23 +24,22 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (selectedContract) {
-      setIsFetching(true);
-      fetch(`http://localhost:9090/contract/${selectedContract.id}`)
-        .then((res) => res.json())
-        .then((contract) => {
-          setIsFetching(false);
-          setSelectedContract(contract);
-        });
-    }
-  }, [selectedContract]);
+    setIsFetching(true);
+    fetch(`http://localhost:9090/contract/${selectedContractId}`)
+      .then((res) => res.json())
+      .then((contract) => {
+        setIsFetching(false);
+        setDetailedContract(contract);
+      });
+  }, [selectedContractId]);
 
   const renderListItem = (contract: Contract) => {
     return (
       <ContractListItem
+        key={contract.id}
         contract={contract}
-        onSelect={setSelectedContract}
-        isSelected={!!selectedContract && selectedContract.id === contract.id}
+        onSelect={setSelectedContractId}
+        isSelected={selectedContractId === contract.id}
       />
     );
   };
@@ -51,6 +55,9 @@ function App() {
         <div className="section2">
           {isFetching && (
             <img src={Globe} className="spinning-globe" alt="globe-spinning" />
+          )}
+          {!isFetching && detailedContract && (
+            <DetailedContractCard contract={detailedContract} />
           )}
         </div>
       </div>

@@ -1,0 +1,38 @@
+.detailed-contract-card {
+  width: 370px;
+}
+
+.card-header {
+  background-color: var(--dark-gray);
+  color: var(--white);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+}
+
+.card-section {
+  padding: 20px;
+  display: flex;
+}
+.section-border-top {
+  border-top: 1px solid var(--background);
+}
+
+.detailed-contract-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.iata {
+  color: var(--light-gray);
+}
+
+.separator {
+  border-top: 1px solid var(--light-gray);
+  flex: 1;
+  margin: 0 18px;
+}
