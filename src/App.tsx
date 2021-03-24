@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import Navbar from "./Components/Navbar";
 import ContractListItem from "./Components/ContractListItem";
 import "./App.css";
@@ -60,10 +61,14 @@ const contracts: Contract[] = [
 
 function App() {
   const renderListItem = (contract: Contract) => {
+    const date = moment(contract.flight.start);
     return (
       <ContractListItem
-        destination={contract.flight.to.name}
-        start={contract.flight.start}
+        destination={contract.flight.to.name.replace(
+          /([a-z])([A-Z])/g,
+          "$1 $2"
+        )}
+        date={date.format("MMM D[,] YYYY")}
         nbOfTravellers={contract.flight.nbOfTravellers}
       />
     );

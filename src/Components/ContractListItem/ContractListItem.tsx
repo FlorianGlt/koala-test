@@ -5,18 +5,19 @@ import "./Styles.css";
 interface Props {
   destination: string;
   nbOfTravellers: number;
-  start: string;
+  date: string;
 }
 
-const ContractListItem = ({ start, nbOfTravellers, destination }: Props) => {
+const ContractListItem = ({ date, nbOfTravellers, destination }: Props) => {
   return (
     <div className="card">
-      <img src={luggages} alt="luggages" />
+      <img src={luggages} alt="luggages" className="luggage-image" />
       <div className="content">
-        <span>{start}</span>
-        <span>{destination}</span>
-        <span>{nbOfTravellers}</span>
+        <span className="date">{date}</span>
+        <span className="destination">{destination}</span>
+        <span className="text">{nbOfTravellers} Travelers</span>
       </div>
+      <div className="uncheck" />
     </div>
   );
 };

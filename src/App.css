@@ -1,7 +1,9 @@
 :root {
   --dark-gray: #162f37;
   --mid-gray: #a7a7a7;
+  --light-gray: #8ca1a1;
   --background: #e5e5e5;
+  --text: #5b6a6d;
   --white: #ffffff;
   --black: #000000;
   --success: #6ee9c5;
@@ -18,7 +20,8 @@
 }
 
 .title {
-  font-family: HKGrotesk;
+  font-family: HKGroteskExtraBold;
+  margin-bottom: 33px;
 }
 
 .list {

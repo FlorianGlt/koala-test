@@ -1,12 +1,33 @@
+@font-face {
+  font-family: "HKGrotesk";
+  src: local("HKGrotesk"),
+    url(./Assets/fonts/HKGrotesk-Regular.otf) format("truetype");
+}
+
+@font-face {
+  font-family: "HKGroteskBold";
+  src: local("HKGroteskBold"),
+    url(./Assets/fonts/HKGrotesk-Bold.otf) format("truetype");
+}
+
+@font-face {
+  font-family: "HKGroteskExtraBold";
+  src: local("HKGroteskExtraBold"),
+    url(./Assets/fonts/HKGrotesk-ExtraBold.otf) format("truetype");
+}
+
 html {
   height: 100%;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: HKGrotesk, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dark-gray);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
