@@ -1,75 +1,41 @@
-import React from "react";
-import moment from "moment";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Components/Navbar";
 import ContractListItem from "./Components/ContractListItem";
 import "./App.css";
-
-interface Contract {
-  id: string;
-  type: "flight";
-  flight: {
-    from: {
-      name: string;
-      iata: string;
-    };
-    to: {
-      name: string;
-      iata: string;
-    };
-    number: string;
-    start: string;
-    nbOfTravellers: number;
-  };
-}
-
-const contracts: Contract[] = [
-  {
-    flight: {
-      from: {
-        iata: "BCN",
-        name: "Barcelona",
-      },
-      number: "AF1238",
-      start: "2019-09-16T05:30:00.000+01:00",
-      to: {
-        iata: "JFK",
-        name: "NewYork",
-      },
-      nbOfTravellers: 3,
-    },
-    id: "1",
-    type: "flight",
-  },
-  {
-    flight: {
-      from: {
-        iata: "JFK",
-        name: "NewYork",
-      },
-      number: "AF1338",
-      start: "2019-07-16T06:30:00.000-06:00",
-      to: {
-        iata: "BCN",
-        name: "Barcelona",
-      },
-      nbOfTravellers: 3,
-    },
-    id: "2",
-    type: "flight",
-  },
-];
+import { Contract, DetailedContract } from "./Utils/Interfaces";
+import Globe from "./Assets/Icons/ezgif.com-gif-maker.gif";
 
 function App() {
+  const [contracts, setContracts] = useState<Contract[]>([]);
+  const [isFetching, setIsFetching] = useState(false);
+  const [selectedContract, setSelectedContract] = useState<Contract | null>(
+    null
+  );
+
+  useEffect(() => {
+    fetch("http://localhost:9090/contract")
+      .then((res) => res.json())
+      .then(setContracts);
+  }, []);
+
+  useEffect(() => {
+    if (selectedContract) {
+      setIsFetching(true);
+      fetch(`http://localhost:9090/contract/${selectedContract.id}`)
+        .then((res) => res.json())
+        .then((contract) => {
+          setIsFetching(false);
+          setSelectedContract(contract);
+        });
+    }
+  }, [selectedContract]);
+
   const renderListItem = (contract: Contract) => {
-    const date = moment(contract.flight.start);
     return (
       <ContractListItem
-        destination={contract.flight.to.name.replace(
-          /([a-z])([A-Z])/g,
-          "$1 $2"
-        )}
-        date={date.format("MMM D[,] YYYY")}
-        nbOfTravellers={contract.flight.nbOfTravellers}
+        contract={contract}
+        onSelect={setSelectedContract}
+        isSelected={!!selectedContract && selectedContract.id === contract.id}
       />
     );
   };
@@ -78,8 +44,15 @@ function App() {
     <div className="app">
       <Navbar />
       <div className="app-container">
-        <h1 className="title">Your flights</h1>
-        <div className="list">{contracts.map(renderListItem)}</div>
+        <div className="section1">
+          <h1 className="title">Your flights</h1>
+          <div className="list">{contracts.map(renderListItem)}</div>
+        </div>
+        <div className="section2">
+          {isFetching && (
+            <img src={Globe} className="spinning-globe" alt="globe-spinning" />
+          )}
+        </div>
       </div>
     </div>
   );

@@ -13,17 +13,35 @@
 .app {
   background-color: var(--background);
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .app-container {
   padding: 36px 98px;
+  display: flex;
+  flex: 1;
 }
 
 .title {
   font-family: HKGroteskExtraBold;
+  font-size: 32px;
   margin-bottom: 33px;
 }
 
-.list {
-  width: 50%;
+.section1,
+.section2 {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.section2 {
+  justify-content: center;
+}
+
+.spinning-globe {
+  align-self: center;
+  height: 325px;
+  width: 325px;
 }
